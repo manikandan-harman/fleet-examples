@@ -20,4 +20,4 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: NanoMqServerName
-          value: 10.43.179.207
+          value: 10.43.172.89
