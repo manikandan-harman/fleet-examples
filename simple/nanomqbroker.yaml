@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nanomqbroker
+  namespace: solution-vision
+spec:
+  selector:
+    matchLabels:
+      app: nanomqbroker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nanomqbroker
+    spec:
+     containers:
+      - name: nanomqbroker
+        image: emqx/nanomq:0.15.5
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NANOMQ_HTTP_SERVER_ENABLE
+          value: 'true'
+        ports:
+            - containerPort: 1883
+              name: management
+              protocol: TCP
+            - containerPort: 8883
+              name: mqqt
+              protocol: TCP
+            - containerPort: 8083
+              name: mqt
+              protocol: TCP
+            - containerPort: 8081
+              name: http
+              protocol: TCP
