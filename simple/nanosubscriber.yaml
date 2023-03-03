@@ -16,7 +16,7 @@ spec:
     spec:
      containers:
       - name: nanosubscriber
-        image: manibsccs89/nanosubscriber:3.0.0
+        image: manibsccs89/nanosubscriber:5.0.0
         imagePullPolicy: IfNotPresent
         env:
         - name: NanoMqServerName
