@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nanosubscriber
-  namespace: solution-vision
+  namespace: solution
 spec:
   selector:
     matchLabels:
