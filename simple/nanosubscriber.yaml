@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nanosubscriber
+  namespace: solution-vision
+spec:
+  selector:
+    matchLabels:
+      app: nanosubscriber
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nanosubscriber
+    spec:
+     containers:
+      - name: nanosubscriber
+        image: manibsccs89/nanosubscriber:3.0.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NanoMqServerName
+          value: 10.43.231.70
