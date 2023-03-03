@@ -45,15 +45,19 @@ spec:
   selector:
     app: nanomqbroker
   ports:
-    - port: 8083
+    - name: mqqt
+      port: 8083
       targetPort: 8083
       protocol: TCP
-    - port: 1883
+    - name: mt
+      port: 1883
       targetPort: 1883
       protocol: TCP
-    - port: 8883
+    - name: mqt
+      port: 8883
       targetPort: 8883
       protocol: TCP
-    - port: 8081
+    - name: http
+      port: 8081
       targetPort: 8081
       protocol: TCP
