@@ -195,17 +195,15 @@ data:
         #- type: kubernetes
         #  node: ${NODE_NAME}
         #  hints.enabled: true
-
-    processors:
-      - add_cloud_metadata:
-
-    cloud.id: ${ELASTIC_CLOUD_ID}
-    cloud.auth: ${ELASTIC_CLOUD_AUTH}
-
-    output.elasticsearch:
-      hosts: ['${ELASTICSEARCH_HOST:elasticsearch}:${ELASTICSEARCH_PORT:9200}']
-      username: ${ELASTICSEARCH_USERNAME}
-      password: ${ELASTICSEARCH_PASSWORD}
+    output.file:
+      path: "/tmp/metricbeat"
+      filename: metricbeat
+      rotate_every_kb: 512
+      number_of_files: 6
+      codec.json:
+        pretty: false
+        escape_html: true
+      rotate_on_startup: true
 ---
 apiVersion: v1
 kind: ConfigMap
