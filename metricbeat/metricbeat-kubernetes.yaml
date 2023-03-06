@@ -195,15 +195,15 @@ data:
         #- type: kubernetes
         #  node: ${NODE_NAME}
         #  hints.enabled: true
+
     output.file:
-      path: "/tmp/metricbeat"
-      filename: metricbeat
-      rotate_every_kb: 512
-      number_of_files: 6
-      codec.json:
-        pretty: false
-        escape_html: true
-      rotate_on_startup: true
+      path: "/tmp/metricbeat"
+      filename: metricbeat
+      rotate_every_kb: 512
+      number_of_files: 6
+      codec.json:
+        pretty: false
+        escape_html: true
 ---
 apiVersion: v1
 kind: ConfigMap
