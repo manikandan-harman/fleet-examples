@@ -20,4 +20,4 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: NanoMqServerName
-          value: 10.43.172.89
+          value: nanomqbrokersvc.coreandcommon.svc.cluster.local
