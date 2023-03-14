@@ -15,7 +15,7 @@ spec:
     spec:
      containers:
       - name: kafkaconsumer
-        image: manibsccs89/kafkaconsumer:1.0.0
+        image: manibsccs89/kafkaconsumer:2.0.0
         imagePullPolicy: IfNotPresent
         env:
         - name: KafkaServerName
