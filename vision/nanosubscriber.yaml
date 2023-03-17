@@ -1,1 +1,23 @@
-
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nanosubscriber
+  namespace: vision01
+spec:
+  selector:
+    matchLabels:
+      app: nanosubscriber
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nanosubscriber
+    spec:
+     containers:
+      - name: nanosubscriber
+        image: manibsccs89/nanosubscriber:5.0.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NanoMqServerName
+          value: nanomqbrokersvc.coreandcommon.svc.cluster.local
