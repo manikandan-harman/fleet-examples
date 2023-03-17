@@ -1,1 +1,23 @@
-
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nanopublisher
+  namespace: crosscontamination
+spec:
+  selector:
+    matchLabels:
+      app: nanopublisher
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nanopublisher
+    spec:
+     containers:
+      - name: nanopublisher
+        image: manibsccs89/nanopublisher:5.0.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NanoMqServerName
+          value: nanomqbrokersvc.coreandcommon.svc.cluster.local
