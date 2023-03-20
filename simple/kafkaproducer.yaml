@@ -19,6 +19,6 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: KafkaServerName
-          value: my-release-kafka.default.svc.cluster.local:9092
+          value: kafka-release.default.svc.cluster.local:9092
         - name: KafkaTopicName
           value: test
