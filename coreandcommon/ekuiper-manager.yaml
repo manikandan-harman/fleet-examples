@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ekuiper-manager
+  namespace: coreandcommon
+spec:
+  selector:
+    matchLabels:
+      app: ekuiper-manager
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ekuiper-manager
+    spec:
+     containers:
+      - name: ekuiper-manager
+        image: emqx/ekuiper-manager:1.8.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DEFAULT_EKUIPER_ENDPOINT
+          value: 'http://ekuipersvc.coreandcommon.svc.cluster.local:9081'
+        ports:
+            - containerPort: 9082
+              name: management
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ekuipermanagerlb
+  namespace: coreandcommon
+spec:
+  type: LoadBalancer
+  externalIPs:
+    - 20.235.16.30
+  selector:
+    app: neuronex
+  ports:
+    - name: management
+      port: 9082
+      targetPort: 9082
+      protocol: TCP
