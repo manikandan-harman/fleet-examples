@@ -45,10 +45,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: neuronexsvc
+  name: neuroneclb
   namespace: coreandcommon
 spec:
-  type: ClusterIP
+  type: LoadBalancer
+  externalIPs:
+    - 20.235.16.30
   selector:
     app: neuronex
   ports:
