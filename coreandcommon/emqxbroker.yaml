@@ -78,22 +78,6 @@ spec:
   selector:
     app: emqxbroker
   ports:
-    - name: port1
-      port: 1883
-      targetPort: 1883
-      protocol: TCP
-    - name: port2
-      port: 8083
-      targetPort: 8083
-      protocol: TCP
-    - name: port3
-      port: 8084
-      targetPort: 8084
-      protocol: TCP
-    - name: port4
-      port: 8883
-      targetPort: 8883
-      protocol: TCP
     - name: port5
       port: 18083
       targetPort: 18083
