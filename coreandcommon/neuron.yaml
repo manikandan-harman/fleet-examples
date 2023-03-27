@@ -49,6 +49,7 @@ metadata:
   namespace: coreandcommon
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Cluster
   externalIPs:
     - 20.235.16.30
   selector:
