@@ -1,0 +1,100 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emqxbroker
+  namespace: coreandcommon
+spec:
+  selector:
+    matchLabels:
+      app: emqxbroker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: emqxbroker
+    spec:
+     containers:
+      - name: emqxbroker
+        image: emqx/emqx:5.0.20
+        imagePullPolicy: IfNotPresent
+        ports:
+            - containerPort: 1883
+              name: port1
+              protocol: TCP
+            - containerPort: 8083
+              name: port2
+              protocol: TCP
+            - containerPort: 8084
+              name: port3
+              protocol: TCP
+            - containerPort: 8883
+              name: port4
+              protocol: TCP
+            - containerPort: 18083
+              name: port5
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emqxbrokersvc
+  namespace: coreandcommon
+spec:
+  type: ClusterIP
+  selector:
+    app: emqxbroker
+  ports:
+    - name: port1
+      port: 1883
+      targetPort: 1883
+      protocol: TCP
+    - name: port2
+      port: 8083
+      targetPort: 8083
+      protocol: TCP
+    - name: port3
+      port: 8084
+      targetPort: 8084
+      protocol: TCP
+    - name: port4
+      port: 8883
+      targetPort: 8883
+      protocol: TCP
+    - name: port5
+      port: 18083
+      targetPort: 18083
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emqxbrokerlb
+  namespace: coreandcommon
+spec:
+  type: LoadBalancer
+  externalIPs:
+    - 20.235.16.30
+  selector:
+    app: emqxbroker
+  ports:
+    - name: port1
+      port: 1883
+      targetPort: 1883
+      protocol: TCP
+    - name: port2
+      port: 8083
+      targetPort: 8083
+      protocol: TCP
+    - name: port3
+      port: 8084
+      targetPort: 8084
+      protocol: TCP
+    - name: port4
+      port: 8883
+      targetPort: 8883
+      protocol: TCP
+    - name: port5
+      port: 18083
+      targetPort: 18083
+      protocol: TCP
