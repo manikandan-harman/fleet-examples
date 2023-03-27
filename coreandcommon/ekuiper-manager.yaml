@@ -36,7 +36,7 @@ spec:
   externalIPs:
     - 20.235.16.30
   selector:
-    app: neuronex
+    app: ekuiper-manager
   ports:
     - name: management
       port: 9082
