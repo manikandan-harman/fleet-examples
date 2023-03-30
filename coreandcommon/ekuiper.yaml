@@ -16,7 +16,7 @@ spec:
     spec:
      containers:
       - name: ekuiper
-        image: lfedge/ekuiper:1.8.0
+        image: lfedge/ekuiper:latest
         imagePullPolicy: IfNotPresent
         env:
         - name: MQTT_SOURCE__DEFAULT__SERVER
