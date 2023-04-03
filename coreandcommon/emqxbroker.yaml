@@ -20,19 +20,19 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
             - containerPort: 1883
-              name: port1
+              name: tcp-port
               protocol: TCP
             - containerPort: 8083
-              name: port2
+              name: ws-port
               protocol: TCP
             - containerPort: 8084
-              name: port3
+              name: wss-port
               protocol: TCP
             - containerPort: 8883
-              name: port4
+              name: ssl-port
               protocol: TCP
             - containerPort: 18083
-              name: port5
+              name: mgnt-port
               protocol: TCP
 ---
 apiVersion: v1
@@ -45,23 +45,23 @@ spec:
   selector:
     app: emqxbroker
   ports:
-    - name: port1
+    - name: tcp-port
       port: 1883
       targetPort: 1883
       protocol: TCP
-    - name: port2
+    - name: ws-port
       port: 8083
       targetPort: 8083
       protocol: TCP
-    - name: port3
+    - name: wss-port
       port: 8084
       targetPort: 8084
       protocol: TCP
-    - name: port4
+    - name: ssl-port
       port: 8883
       targetPort: 8883
       protocol: TCP
-    - name: port5
+    - name: mgnt-port
       port: 18083
       targetPort: 18083
       protocol: TCP
@@ -78,7 +78,7 @@ spec:
   selector:
     app: emqxbroker
   ports:
-    - name: port5
+    - name: mgnt-portal
       port: 18083
       targetPort: 18083
       protocol: TCP
