@@ -37,6 +37,9 @@ spec:
             - containerPort: 7000
               name: management
               protocol: TCP
+            - containerPort: 9081
+              name: ekuiper
+              protocol: TCP
      volumes:
       - name: neuronexvolv
         persistentVolumeClaim:
@@ -58,4 +61,8 @@ spec:
     - name: management
       port: 7000
       targetPort: 7000
+      protocol: TCP
+    - name: ekuiper
+      port: 9081
+      targetPort: 9081
       protocol: TCP
