@@ -40,3 +40,25 @@ spec:
       - name: nfs
         persistentVolumeClaim:
           claimName: nfs-claim-pvc
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: test-pod
+spec:
+  containers:
+  - name: test-pod
+    image: busybox:stable
+    command:
+      - "/bin/sh"
+    args:
+      - "-c"
+      - "touch /mnt/SUCCESS && exit 0 || exit 1"
+    volumeMounts:
+      - name: nfs
+        mountPath: "/mnt"
+  restartPolicy: "Never"
+  volumes:
+    - name: nfs
+      persistentVolumeClaim:
+        claimName: nfs-claim-pvc
