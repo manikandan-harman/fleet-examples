@@ -54,12 +54,3 @@ spec:
     image: nginx
     ports:
     - containerPort: 80
-    # Mount the NFS volume in the container
-    volumeMounts:
-    - name: nfs
-      mountPath: /mnt/nfs-share
-  # Add the NFS volume to the Pod
-  volumes:
-  - name: nfs
-    persistentVolumeClaim:
-      claimName: nfs-claim-pvc
