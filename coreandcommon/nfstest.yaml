@@ -9,4 +9,24 @@ spec:
     requests:
       storage: 1Mi
   storageClassName: nfs-clientv3
-
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: manikandan-pod
+spec:
+  containers:
+  - name: manikandan-pod
+    image: busybox:stable
+    command:
+      - "/bin/sh"
+    args:
+      - "-c"
+      - "touch /mnt/manikandanSUCCESS"
+    volumeMounts:
+      - name: nfsazure
+        mountPath: "/mnt"
+  volumes:
+    - name: nfsazure
+      persistentVolumeClaim:
+        claimName: nfs-claim-pvc-v11
