@@ -30,10 +30,6 @@ spec:
       - name: nanopublisher
         image: manibsccs89/nanopublisher:5.0.0
         imagePullPolicy: IfNotPresent
-        command:
-          - sh
-          - -c
-          - 'mkdir data;'
         env:
         - name: NanoMqServerName
           value: emqxbrokersvc.coreandcommon.svc.cluster.local
