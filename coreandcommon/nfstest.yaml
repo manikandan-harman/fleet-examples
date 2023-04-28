@@ -9,37 +9,6 @@ spec:
     requests:
       storage: 1Mi
   storageClassName: nfs-clientv3
----  
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: manikandan
-  namespace: crosscontamination
-spec:
-  selector:
-    matchLabels:
-      app: manikandan
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: manikandan
-    spec:
-     containers:
-      - name: manikandan
-        image: manibsccs89/nanopublisher:5.0.0
-        imagePullPolicy: IfNotPresent
-        env:
-        - name: NanoMqServerName
-          value: emqxbrokersvc.coreandcommon.svc.cluster.local
-     volumeMounts:
-      - name: nfsazure
-        mountPath: /data
-        subPath: "manikandan"
-     volumes:
-      - name: nfsazure
-        persistentVolumeClaim:
-          claimName: nfs-claim-pvc-v11
 ---
 kind: Pod
 apiVersion: v1
@@ -60,4 +29,4 @@ spec:
   volumes:
     - name: nfsazure
       persistentVolumeClaim:
-        claimName: nfs-claim-pvc-v1
+        claimName: nfs-claim-pvc-v11
