@@ -1,52 +1,41 @@
-kind: PersistentVolumeClaim
+---
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
   name: test-claim
-#  annotations:
-#    nfs.io/storage-path: "./" # not required, depending on whether this annotation was shown in the storage class description
-
 spec:
-  storageClassName: nfs-client3
   accessModes:
-    - ReadWriteMany
+  - ReadWriteMany
   resources:
     requests:
       storage: 1Mi
+  storageClassName: nfs-client3
 ---
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
-  name: nfs-busybox
-  namespace: coreandcommon
-
+  name: nanopublisher
+  namespace: crosscontamination
 spec:
   replicas: 1
-
   selector:
-    name: nfs-busybox
-
+    matchLabels:
+      app: nanopublisher
   template:
     metadata:
       labels:
-        name: nfs-busybox
-
+        app: nanopublisher
     spec:
       containers:
-      - image: busybox
-        command:
-          - sh
-          - -c
-          - 'while true; do date > /data/index.html; hostname >> /data/index.html; sleep $(($RANDOM % 5 + 5)); done'
-        imagePullPolicy: IfNotPresent
-        name: manibsccs89/nanopublisher:5.0.0
-        env:
+      - env:
         - name: NanoMqServerName
           value: emqxbrokersvc.coreandcommon.svc.cluster.local
-        volumeMounts:
-          # name must match the volume name below
-          - name: nfs
-            mountPath: /data
+        image: manibsccs89/nanopublisher:5.0.0
+        imagePullPolicy: IfNotPresent
+        name: nanopublisher
+      volumeMounts:
+      - mountPath: /data
+        name: nfs
       volumes:
       - name: nfs
         persistentVolumeClaim:
