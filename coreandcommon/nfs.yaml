@@ -40,4 +40,4 @@ spec:
      volumes:
       - name: nfs
         persistentVolumeClaim:
-          claimName: test-claim
+          claimName: nfs-claim-pvc
