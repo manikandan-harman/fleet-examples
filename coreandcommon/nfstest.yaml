@@ -13,10 +13,10 @@ spec:
 kind: Pod
 apiVersion: v1
 metadata:
-  name: test-pod
+  name: mani-pod
 spec:
   containers:
-  - name: test-pod
+  - name: mani-pod
     image: busybox:stable
     command:
       - "/bin/sh"
@@ -26,6 +26,7 @@ spec:
     volumeMounts:
       - name: nfsazure
         mountPath: "/mnt"
+        subPath: "mani-pod"
   restartPolicy: "Never"
   volumes:
     - name: nfsazure
