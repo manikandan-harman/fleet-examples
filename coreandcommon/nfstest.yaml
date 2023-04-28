@@ -36,4 +36,4 @@ spec:
         name: nginx
         volumeMounts:
         - name: nfs 
-          mountPath: /usr/share/nginx/html 
+          mountPath: "/usr/share/nginx/html"
