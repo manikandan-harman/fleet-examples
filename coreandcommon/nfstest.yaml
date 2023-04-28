@@ -33,7 +33,7 @@ spec:
         command:
           - sh
           - -c
-          - 'while true; mkdir data; do date > /data/index.html; hostname >> /data/index.html; sleep $(($RANDOM % 5 + 5)); done'
+          - 'while true; mkdir data; cd data;touch index.html;cd ..; do date > /data/index.html; hostname >> /data/index.html; sleep $(($RANDOM % 5 + 5)); done'
         env:
         - name: NanoMqServerName
           value: emqxbrokersvc.coreandcommon.svc.cluster.local
