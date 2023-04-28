@@ -33,10 +33,9 @@ spec:
         env:
         - name: NanoMqServerName
           value: emqxbrokersvc.coreandcommon.svc.cluster.local
-
-     volumeMounts:
-      - name: nfs
-        mountPath: ./abhinav
+        volumeMounts:
+         - name: nfs
+           mountPath: ./abhinav
      volumes:
       - name: nfs
         persistentVolumeClaim:
