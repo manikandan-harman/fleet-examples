@@ -36,34 +36,7 @@ spec:
 
      volumeMounts:
       - name: nfs
-        mountPath: /data
-     volumes:
-      - name: nfs
-        persistentVolumeClaim:
-          claimName: nfs-claim-pvc
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx
-  namespace: coreandcommon
-spec:
-  selector:
-    matchLabels:
-      app: nginx
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-     containers:
-      - name: nginx
-        image: nginx
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-         - name: nfs
-           mountPath: /opt/nginx/persistence
+        mountPath: ./abhinav
      volumes:
       - name: nfs
         persistentVolumeClaim:
