@@ -14,11 +14,11 @@ spec:
       storage: 1Mi
 ---
 apiVersion: v1
-kind: ReplicationController
+kind: Deployment
 
 metadata:
   name: nfs-busybox
-  #namespace: coreandcommon
+  namespace: coreandcommon
 
 spec:
   replicas: 1
@@ -39,14 +39,14 @@ spec:
           - -c
           - 'while true; do date > /data/index.html; hostname >> /data/index.html; sleep $(($RANDOM % 5 + 5)); done'
         imagePullPolicy: IfNotPresent
-        name: busybox
+        name: manibsccs89/nanopublisher:5.0.0
+        env:
+        - name: NanoMqServerName
+          value: emqxbrokersvc.coreandcommon.svc.cluster.local
         volumeMounts:
           # name must match the volume name below
           - name: nfs
             mountPath: /data
-          #- name: nfs-3-1-busybox
-          #  mountPath: /data
-
       volumes:
       - name: nfs
         persistentVolumeClaim:
