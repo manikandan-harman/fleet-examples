@@ -40,19 +40,3 @@ spec:
       - name: nfs
         persistentVolumeClaim:
           claimName: nfs-claim-pvc
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: test-cinder
-spec:
-  containers:
-  - image: registry.k8s.io/test-webserver
-    name: test-cinder-container
-    volumeMounts:
-    - mountPath: /test-cinder
-      name: test-volume
-  volumes:
-  - name: test-volume
-    persistentVolumeClaim:
-     claimName: nfs-claim-pvc
