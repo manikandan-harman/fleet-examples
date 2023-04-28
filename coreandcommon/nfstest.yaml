@@ -42,15 +42,22 @@ spec:
         persistentVolumeClaim:
           claimName: nfs-claim-pvc
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: nginx
-  labels:
-    name: nginx
+  namespace: crosscontamination
 spec:
-  containers:
-  - name: nginx
-    image: nginx
-    ports:
-    - containerPort: 80
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+     containers:
+      - name: nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
