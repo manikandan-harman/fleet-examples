@@ -10,25 +10,33 @@ spec:
       storage: 1Mi
   storageClassName: nfs-clientv3
 ---  
-kind: Pod
-apiVersion: v1
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: mani-pod1
+  name: manikandan
+  namespace: crosscontamination
 spec:
-  containers:
-  - name: mani-pod1
-    image: busybox:stable
-    command:
-      - "/bin/sh"
-    args:
-      - "-c"
-      - "touch /mnt/SUCCESS && exit 0 || exit 1"
-    volumeMounts:
+  selector:
+    matchLabels:
+      app: manikandan
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: manikandan
+    spec:
+     containers:
+      - name: manikandan
+        image: manibsccs89/nanopublisher:5.0.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NanoMqServerName
+          value: emqxbrokersvc.coreandcommon.svc.cluster.local
+     volumeMounts:
       - name: nfsazure
-        mountPath: "/mnt"
-        subPath: "mani-pod"
-  restartPolicy: "Never"
-  volumes:
-    - name: nfsazure
-      persistentVolumeClaim:
-        claimName: nfs-claim-pvc-v11
+        mountPath: /data
+        subPath: "manikandan"
+     volumes:
+      - name: nfsazure
+        persistentVolumeClaim:
+          claimName: nfs-claim-pvc-v11
