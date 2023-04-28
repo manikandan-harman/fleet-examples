@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-claim-pvc-v1
+  name: nfs-claim-pvc-v11
 spec:
   accessModes:
   - ReadWriteOnce
@@ -13,10 +13,10 @@ spec:
 kind: Pod
 apiVersion: v1
 metadata:
-  name: mani-pod
+  name: mani-pod1
 spec:
   containers:
-  - name: mani-pod
+  - name: mani-pod1
     image: busybox:stable
     command:
       - "/bin/sh"
@@ -31,4 +31,4 @@ spec:
   volumes:
     - name: nfsazure
       persistentVolumeClaim:
-        claimName: nfs-claim-pvc-v1
+        claimName: nfs-claim-pvc-v11
