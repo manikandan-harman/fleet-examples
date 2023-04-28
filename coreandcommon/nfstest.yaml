@@ -22,7 +22,7 @@ spec:
         claimName: nfs-claim-pvc
   containers:
     - name: pv-dynamic-container
-      image: nginx
+      image: nginx:latest
       ports:
         - containerPort: 80
           name: "nginx"
