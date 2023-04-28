@@ -61,3 +61,10 @@ spec:
       - name: nginx
         image: nginx
         imagePullPolicy: IfNotPresent
+     volumeMounts:
+      - name: nfs
+        mountPath: /mnt/nfs-share
+     volumes:
+      - name: nfs
+        persistentVolumeClaim:
+          claimName: nfs-claim-pvc   
