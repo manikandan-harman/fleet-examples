@@ -11,29 +11,21 @@ spec:
       storage: 1Mi
   storageClassName: nfs-client3
 ---
-apiVersion: apps/v1 
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  labels:
-    app: sc-nginx
-  name: sc-nfs-nginx
+  name: pv-dynamic-pod
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: sc-nginx
-  template:
-    metadata:
-      labels:
-        app: sc-nginx
-    spec:
-      volumes:
-      - name: nfs
-        persistentVolumeClaim:
-          claimName: nfs-claim-pvc
-      containers:
-      - image: nginx
-        name: nginx
-        volumeMounts:
-        - name: nfs 
-          mountPath: "/usr/share/nginx/html"
+  volumes:
+    - name: pv-dynamic-storage
+      persistentVolumeClaim:
+        claimName: nfs-claim-pvc
+  containers:
+    - name: pv-dynamic-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "nginx"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: pv-dynamic-storage
