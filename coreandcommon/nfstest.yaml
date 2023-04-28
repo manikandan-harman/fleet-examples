@@ -46,7 +46,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
-  namespace: crosscontamination
+  namespace: coreandcommon
 spec:
   selector:
     matchLabels:
@@ -61,10 +61,10 @@ spec:
       - name: nginx
         image: nginx
         imagePullPolicy: IfNotPresent
-     volumeMounts:
-      - name: nfs
-        mountPath: /mnt/nfs-share
+        volumeMounts:
+         - name: nfs
+           mountPath: /opt/nginx/persistence
      volumes:
       - name: nfs
         persistentVolumeClaim:
-          claimName: nfs-claim-pvc   
+          claimName: nfs-claim-pvc
