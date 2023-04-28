@@ -41,6 +41,18 @@ spec:
         persistentVolumeClaim:
           claimName: nfs-claim-pvc
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-claim-pvc-v1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: nfs-clientv3
+---  
 kind: Pod
 apiVersion: v1
 metadata:
@@ -55,10 +67,10 @@ spec:
       - "-c"
       - "touch /mnt/SUCCESS && exit 0 || exit 1"
     volumeMounts:
-      - name: nfs
+      - name: nfsazure
         mountPath: "/mnt"
   restartPolicy: "Never"
   volumes:
-    - name: nfs
+    - name: nfsazure
       persistentVolumeClaim:
-        claimName: nfs-claim-pvc
+        claimName: nfs-claim-pvc-v1
