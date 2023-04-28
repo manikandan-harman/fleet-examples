@@ -17,26 +17,31 @@ metadata:
   name: nanopublisher
   namespace: crosscontamination
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: nanopublisher
+  replicas: 1
   template:
     metadata:
       labels:
         app: nanopublisher
     spec:
-      containers:
-      - env:
-        - name: NanoMqServerName
-          value: emqxbrokersvc.coreandcommon.svc.cluster.local
+     containers:
+      - name: nanopublisher
         image: manibsccs89/nanopublisher:5.0.0
         imagePullPolicy: IfNotPresent
-        name: nanopublisher
-      volumeMounts:
-      - mountPath: /data
-        name: nfs
-      volumes:
+        command:
+          - sh
+          - -c
+          - 'while true; do date > /data/index.html; hostname >> /data/index.html; sleep $(($RANDOM % 5 + 5)); done'
+        env:
+        - name: NanoMqServerName
+          value: emqxbrokersvc.coreandcommon.svc.cluster.local
+
+     volumeMounts:
+      - name: nfs
+        mountPath: /data
+     volumes:
       - name: nfs
         persistentVolumeClaim:
-          claimName: test-claim
+          claimName: test-claim	 
