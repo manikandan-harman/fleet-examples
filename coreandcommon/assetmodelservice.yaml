@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assetmodelservice
+  namespace: crosscontamination
+spec:
+  selector:
+    matchLabels:
+      app: assetmodelservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: assetmodelservice
+    spec:
+     containers:
+      - name: assetmodelservice
+        image: manibsccs89/assetmodelservice:1.0.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NanoMqServerName
+          value: emqxbrokersvc.coreandcommon.svc.cluster.local
+        - name: NanoMqServerName
+          value: emqxbrokersvc.coreandcommon.svc.cluster.local
+        - name: NanoMqServerName
+          value: emqxbrokersvc.coreandcommon.svc.cluster.local
