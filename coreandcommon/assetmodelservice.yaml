@@ -19,8 +19,8 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: NanoMqServerName
-          value: emqxbrokersvc.coreandcommon.svc.cluster.local
-        - name: NanoMqServerName
-          value: emqxbrokersvc.coreandcommon.svc.cluster.local
-        - name: NanoMqServerName
-          value: emqxbrokersvc.coreandcommon.svc.cluster.local
+          value: broker.emqx.io
+        - name: NeuronBaseUri
+          value: http://neuronekuipersvc.coreandcommon.svc.cluster.local:7000
+        - name: EkuiperBaseUri
+          value: http://neuronekuipersvc.coreandcommon.svc.cluster.local:9081
