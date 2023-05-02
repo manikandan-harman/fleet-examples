@@ -15,7 +15,7 @@ spec:
     spec:
      containers:
       - name: assetmodelservice
-        image: manibsccs89/assetmodelservice:1.0.0
+        image: manibsccs89/assetmodelservice:2.0.0
         imagePullPolicy: IfNotPresent
         env:
         - name: NanoMqServerName
