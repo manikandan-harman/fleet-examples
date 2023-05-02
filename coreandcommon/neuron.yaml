@@ -77,7 +77,11 @@ spec:
   selector:
     app: neuronex
   ports:
-    - name: api
+    - name: neuronapi
+      port: 7000
+      targetPort: 7000
+      protocol: TCP
+    - name: ekuiperapi
       port: 9081
       targetPort: 9081
       protocol: TCP
