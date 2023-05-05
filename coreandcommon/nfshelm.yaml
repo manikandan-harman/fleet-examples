@@ -1,0 +1,18 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: nfs
+  namespace: default
+spec:
+  chart: nfs-subdir-external-provisioner
+  repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+  targetNamespace: default
+  set:
+    nfs.server: industrialnfs.blob.core.windows.net
+    nfs.path: /industrialnfs/helm
+    storageClass.name: nfs
+    nfs.volumeName: nfsv
+    nfs.mountOptions: {relatime,nolock,noac,sec=sys,vers=3,proto=tcp}
+    storageClass.reclaimPolicy: Retain
+    storageClass.accessModes: ReadWriteMany
+    replicaCount: 1
