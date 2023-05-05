@@ -34,7 +34,7 @@ spec:
           value: emqxbrokersvc.coreandcommon.svc.cluster.local
         volumeMounts:
         - name: nfsazure
-          mountPath: "/mnt"
+          mountPath: "/app/cc"
           subPath: "solution"
      volumes:
       - name: nfsazure
