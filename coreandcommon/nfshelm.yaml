@@ -11,8 +11,3 @@ spec:
     nfs.server: industrialnfs.blob.core.windows.net
     nfs.path: /industrialnfs/helm
     storageClass.name: nfs
-    nfs.volumeName: nfsv
-    nfs.mountOptions: {relatime,nolock,noac,sec=sys,vers=3,proto=tcp}
-    storageClass.reclaimPolicy: Retain
-    storageClass.accessModes: ReadWriteMany
-    replicaCount: 1
