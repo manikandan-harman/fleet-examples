@@ -1,0 +1,64 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nanomqbroker
+  namespace: crosscontamination
+spec:
+  selector:
+    matchLabels:
+      app: nanomqbroker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nanomqbroker
+    spec:
+     containers:
+      - name: nanomqbroker
+        image: emqx/nanomq:0.15.5
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NANOMQ_HTTP_SERVER_ENABLE
+          value: 'true'
+        ports:
+            - containerPort: 1883
+              name: management
+              protocol: TCP
+            - containerPort: 8883
+              name: mqqt
+              protocol: TCP
+            - containerPort: 8083
+              name: mqt
+              protocol: TCP
+            - containerPort: 8081
+              name: http
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nanomqbrokersvc
+  namespace: crosscontamination
+spec:
+  type: ClusterIP
+  selector:
+    app: nanomqbroker
+  ports:
+    - name: mqqt
+      port: 8083
+      targetPort: 8083
+      protocol: TCP
+    - name: mt
+      port: 1883
+      targetPort: 1883
+      protocol: TCP
+    - name: mqt
+      port: 8883
+      targetPort: 8883
+      protocol: TCP
+    - name: http
+      port: 8081
+      targetPort: 8081
+      protocol: TCP
