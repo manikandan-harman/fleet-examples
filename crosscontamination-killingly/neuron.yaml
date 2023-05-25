@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: neuronex-pvc_cc
+  name: neuronex-pvc
   namespace: crosscontamination
 spec:
   accessModes:
@@ -43,7 +43,7 @@ spec:
      volumes:
       - name: neuronexvolv
         persistentVolumeClaim:
-          claimName: neuronex-pvc_cc
+          claimName: neuronex-pvc
 ---
 apiVersion: v1
 kind: Service
