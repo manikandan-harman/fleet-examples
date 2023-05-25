@@ -19,7 +19,9 @@ spec:
         imagePullPolicy: IfNotPresent
         volumeMounts:
          - name: ekuipervolv
-           mountPath: /opt/ekuiper/persistence
+           mountPath: "/kuiper/data"
+         - name: ekuipervolv
+           mountPath: "/kuiper/etc"
         env:
         - name: MQTT_SOURCE__DEFAULT__SERVER
           value: 'tcp://emqxbrokersvc.coreandcommon.svc.cluster.local:1883'
