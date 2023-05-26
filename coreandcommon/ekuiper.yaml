@@ -21,7 +21,8 @@ spec:
          - name: ekuipervolv
            mountPath: "/kuiper/data"
          - name: ekuipervolvnfs
-           mountPath: "tmp"
+           mountPath: "/kuiper/video"
+           subPath: "solution"
         env:
         - name: MQTT_SOURCE__DEFAULT__SERVER
           value: 'tcp://emqxbrokersvc.coreandcommon.svc.cluster.local:1883'
