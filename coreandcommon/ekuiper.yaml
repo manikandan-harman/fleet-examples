@@ -24,8 +24,6 @@ spec:
         volumeMounts:
          - name: ekuipervolv
            mountPath: "/kuiper/data"
-         - name: ekuipervolvp
-           mountPath: "/kuiper/plugins"
          - name: ekuipervolvnfs
            mountPath: "/kuiper/video"
            subPath: "solution"
@@ -40,9 +38,6 @@ spec:
            protocol: TCP
      volumes:
       - name: ekuipervolv
-        persistentVolumeClaim:
-          claimName: emqxbroker-pvc
-      - name: ekuipervolvp
         persistentVolumeClaim:
           claimName: emqxbroker-pvc
       - name: ekuipervolvnfs
