@@ -28,6 +28,7 @@ spec:
            mountPath: "/kuiper/video"
            subPath: "solution"
         securityContext:
+          runAsUser: 1001
           allowPrivilegeEscalation: false
         env:
         - name: MQTT_SOURCE__DEFAULT__SERVER
