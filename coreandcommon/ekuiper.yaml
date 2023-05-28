@@ -23,11 +23,7 @@ spec:
         imagePullPolicy: IfNotPresent
         volumeMounts:
          - name: ekuipervolv
-           mountPath: "/kuiper/data"
-         - name: ekuipervolv
-           mountPath: "/kuiper/plugins"
-         - name: ekuipervolv
-           mountPath: "/kuiper/etc"
+           mountPath: "/kuiper"
          - name: ekuipervolvnfs
            mountPath: "/kuiper/rtsp"
            subPath: "solution"
