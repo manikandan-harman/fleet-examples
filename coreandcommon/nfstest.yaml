@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-claim-pvc-v11
+  name: nfs-claim-pvc-v12
 spec:
   accessModes:
   - ReadWriteMany
@@ -39,4 +39,4 @@ spec:
      volumes:
       - name: nfsazure
         persistentVolumeClaim:
-          claimName: nfs-claim-pvc-v11
+          claimName: nfs-claim-pvc-v12
