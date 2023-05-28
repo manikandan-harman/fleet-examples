@@ -27,6 +27,8 @@ spec:
          - name: ekuipervolvnfs
            mountPath: "/kuiper/video"
            subPath: "solution"
+        securityContext:
+          allowPrivilegeEscalation: false
         env:
         - name: MQTT_SOURCE__DEFAULT__SERVER
           value: 'tcp://emqxbrokersvc.coreandcommon.svc.cluster.local:1883'
