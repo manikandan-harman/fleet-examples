@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ekuiper
+  namespace: coreandcommon
+spec:
+  selector:
+    matchLabels:
+      app: ekuiper
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ekuiper
+    spec:
+     securityContext:
+          fsGroup: 1001
+          runAsUser: 1001
+          runAsGroup: 1001
+     containers:
+      - name: ekuiper
+        image: lfedge/ekuiper:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+         - name: ekuipervolv
+           mountPath: "/kuiper/data"
+         - name: ekuipervolvnfs
+           mountPath: "/kuiper/rtsp"
+           subPath: "solution"
+        securityContext:
+          runAsUser: 0
+          allowPrivilegeEscalation: false
+        env:
+        - name: MQTT_SOURCE__DEFAULT__SERVER
+          value: 'tcp://emqxbrokersvc.coreandcommon.svc.cluster.local:1883'
+        - name: KUIPER__BASIC__IGNORECASE
+          value: 'false'
+        ports:
+         - containerPort: 9081
+           name: management
+           protocol: TCP
+     volumes:
+      - name: ekuipervolv
+        persistentVolumeClaim:
+          claimName: emqxbroker-pvc
+      - name: ekuipervolvnfs
+        persistentVolumeClaim:
+          claimName: nfs-claim-pvc-v12
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ekuipersvc
+  namespace: coreandcommon
+spec:
+  type: ClusterIP
+  selector:
+    app: ekuiper
+  ports:
+    - name: management
+      port: 9081
+      targetPort: 9081
+      protocol: TCP
