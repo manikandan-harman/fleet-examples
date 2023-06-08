@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: DEFAULT_EKUIPER_ENDPOINT
-          value: 'http://neuronekuipersvc.coreandcommon.svc.cluster.local:9081'
+          value: 'http://ekuipersvc.coreandcommon.svc.cluster.local:9081'
         ports:
             - containerPort: 9082
               name: management
