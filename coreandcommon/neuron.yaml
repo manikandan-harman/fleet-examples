@@ -28,7 +28,7 @@ spec:
     spec:
      containers:
       - name: neuronex
-        image: emqx/neuron:latest
+        image: emqx/neuronex:latest
         imagePullPolicy: IfNotPresent
         volumeMounts:
          - name: neuronexvolv
@@ -37,8 +37,8 @@ spec:
             - containerPort: 7000
               name: management
               protocol: TCP
-            - containerPort: 7081
-              name: nanomsg
+            - containerPort: 9081
+              name: ekuiper
               protocol: TCP
      volumes:
       - name: neuronexvolv
@@ -63,8 +63,8 @@ spec:
       targetPort: 7000
       protocol: TCP
     - name: ekuiper
-      port: 7081
-      targetPort: 7081
+      port: 9081
+      targetPort: 9081
       protocol: TCP
 ---
 apiVersion: v1
@@ -81,7 +81,7 @@ spec:
       port: 7000
       targetPort: 7000
       protocol: TCP
-    - name: nanomsg
-      port: 7081
-      targetPort: 7081
+    - name: ekuiperapi
+      port: 9081
+      targetPort: 9081
       protocol: TCP
