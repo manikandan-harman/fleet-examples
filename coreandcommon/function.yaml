@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myazurefunction
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myazurefunction
+  template:
+    metadata:
+      labels:
+        app: myazurefunction
+    spec:
+      containers:
+      - name: myazurefunction
+        image: priyankajagtap007/demo:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myazurefunction
+spec:
+  selector:
+    app: myazurefunction
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  externalIPs:
+    - 20.235.16.30
