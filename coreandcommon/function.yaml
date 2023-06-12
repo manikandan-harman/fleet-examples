@@ -1,22 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myazurefunction
+  name: function-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: myazurefunction
+      app: eventhubtriggerfunction
   template:
     metadata:
       labels:
-        app: myazurefunction
+        app: eventhubtriggerfunction
     spec:
       containers:
-      - name: myazurefunction
-        image: priyankajagtap007/demo:1.0
-        ports:
-        - containerPort: 80
+        - name: eventhubtriggerfunction
+          image:  priyankajagtap007/demo:2.0
+          ports:
+            - containerPort: 80
+          env:
+            - name: AzureWebJobsStorage
+              value: "DefaultEndpointsProtocol=https;AccountName=pepeiotpdveus1pubsa;AccountKey=Y9pZ7Y3fNdLBZeMUPXg3Gzt5/cq/SAjDXkv/AMU6Rx+mduQz2f5hHb8CXZ2+N9ilYCSm7vQtd+hX+ASt3hs6GQ==;EndpointSuffix=core.windows.net"
+            - name: AzureFunctionsEventHubConnectionAppSetting
+              value: "Endpoint=sb://pep-eiotp-dv-eus-1-eh.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=iUdZVOObKtlJbg9AKXYoZAhNShKZuZjN0axsnknaqtk="
+            - name: AzureFunctionsEventHubNameAppSetting
+              value: "deviceconnectivityhub"
+            - name: ConsumerGroup
+              value: "adtsynchronizer"
 ---
 apiVersion: v1
 kind: Service
