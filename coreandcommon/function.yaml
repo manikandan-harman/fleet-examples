@@ -27,7 +27,7 @@ spec:
     app: myazurefunction
   ports:
     - protocol: TCP
-      port: 80
+      port: 8086
       targetPort: 80
   type: LoadBalancer
   externalTrafficPolicy: Cluster
