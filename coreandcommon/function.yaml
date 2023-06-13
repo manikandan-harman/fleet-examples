@@ -24,6 +24,12 @@ spec:
               value: "Endpoint=sb://pepeiotpdveus1sb.servicebus.windows.net/;SharedAccessKeyName=Listen;SharedAccessKey=opR/K8WHZkn2yV/m3D5meSwS5y7zrSajxgmaAZOfjIY="
             - name: ServiceBusQueueName
               value: "solutionuploadedfiles"
+            - name: AzureFunctionsEventHubConnectionAppSetting
+              value: "Endpoint=sb://pep-eiotp-dv-eus-1-eh.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=iUdZVOObKtlJbg9AKXYoZAhNShKZuZjN0axsnknaqtk="
+            - name: AzureFunctionsEventHubNameAppSetting
+              value: "deviceconnectivityhub"
+            - name: ConsumerGroup
+              value: "adtsynchronizer"
 ---
 apiVersion: v1
 kind: Service
