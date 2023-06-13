@@ -1,39 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: function-deployment
+  name: function-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: eventhubtriggerfunction
+      app: servicebustrigger
   template:
     metadata:
       labels:
-        app: eventhubtriggerfunction
+        app: servicebustrigger
     spec:
       containers:
-        - name: eventhubtriggerfunction
-          image:  priyankajagtap007/demo:2.0
+        - name: servicebustrigger
+          image: priyankajagtap007/demo:3.0
           ports:
             - containerPort: 80
           env:
             - name: AzureWebJobsStorage
               value: "DefaultEndpointsProtocol=https;AccountName=pepeiotpdveus1pubsa;AccountKey=Y9pZ7Y3fNdLBZeMUPXg3Gzt5/cq/SAjDXkv/AMU6Rx+mduQz2f5hHb8CXZ2+N9ilYCSm7vQtd+hX+ASt3hs6GQ==;EndpointSuffix=core.windows.net"
-            - name: AzureFunctionsEventHubConnectionAppSetting
-              value: "Endpoint=sb://pep-eiotp-dv-eus-1-eh.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=iUdZVOObKtlJbg9AKXYoZAhNShKZuZjN0axsnknaqtk="
-            - name: AzureFunctionsEventHubNameAppSetting
-              value: "deviceconnectivityhub"
-            - name: ConsumerGroup
-              value: "adtsynchronizer"
+            - name: ServiceBusConnectionString
+              value: "Endpoint=sb://pepeiotpdveus1sb.servicebus.windows.net/;SharedAccessKeyName=Listen;SharedAccessKey=opR/K8WHZkn2yV/m3D5meSwS5y7zrSajxgmaAZOfjIY="
+            - name: ServiceBusQueueName
+              value: "solutionuploadedfiles"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: eventhubtriggerfunction
+  name: servicebustriggerfunction
 spec:
   selector:
-    app: eventhubtriggerfunction
+    app: servicebustriggerfunction
   ports:
     - protocol: TCP
       port: 8086
@@ -42,4 +40,3 @@ spec:
   externalTrafficPolicy: Cluster
   externalIPs:
     - 20.235.16.30
-
