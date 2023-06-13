@@ -16,14 +16,14 @@ spec:
     spec:
      containers:
       - name: neuronex
-        image: emqx/neuronex:latest
+        image: emqx/neuron:latest
         imagePullPolicy: IfNotPresent
         ports:
             - containerPort: 7000
               name: management
               protocol: TCP
-            - containerPort: 9081
-              name: ekuiper
+            - containerPort: 7081
+              name: nng
               protocol: TCP
 ---
 apiVersion: v1
@@ -43,6 +43,10 @@ spec:
       port: 7070
       targetPort: 7000
       protocol: TCP
+    - name: nng
+      port: 7081
+      targetPort: 7081
+      protocol: TCP
 ---
 apiVersion: v1
 kind: Service
@@ -58,7 +62,7 @@ spec:
       port: 7000
       targetPort: 7000
       protocol: TCP
-    - name: ekuiperapi
-      port: 9081
-      targetPort: 9081
+    - name: nng
+      port: 7081
+      targetPort: 7081
       protocol: TCP
