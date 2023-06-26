@@ -16,7 +16,7 @@ spec:
     spec:
      containers:
       - name: neuronex
-        image: emqx/neuron:latest
+        image: emqx/neuron:2.4.0
         imagePullPolicy: IfNotPresent
         ports:
             - containerPort: 7000
