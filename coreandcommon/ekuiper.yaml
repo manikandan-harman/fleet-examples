@@ -29,7 +29,7 @@ spec:
           allowPrivilegeEscalation: false
         env:
         - name: MQTT_SOURCE__DEFAULT__SERVER
-          value: 'tcp://emqxbrokersvc.coreandcommon.svc.cluster.local:1883'
+          value: 'tcp://nanomqbrokersvc.coreandcommon.svc.cluster.local:1883'
         - name: KUIPER__BASIC__IGNORECASE
           value: 'false'
         ports:
