@@ -44,7 +44,7 @@ spec:
           claimName: emqxbroker-pvc
       - name: ekuipervolvnfs
         persistentVolumeClaim:
-          claimName: pvc-blob-m
+          claimName: pvc-blob-km
 ---
 apiVersion: v1
 kind: Service
