@@ -1,0 +1,24 @@
+kind: PersistentVolumeClaim
+
+apiVersion: v1
+
+metadata:
+
+  name: pvc-blob
+
+spec:
+
+  accessModes:
+
+    - ReadWriteMany
+
+  resources:
+
+    requests:
+
+      storage: 1Gi
+
+  volumeName: pv-blob
+
+  storageClassName: blob-fuse 
+
