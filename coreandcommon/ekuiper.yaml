@@ -26,7 +26,6 @@ spec:
            mountPath: "/kuiper/data"
          - name: ekuipervolvnfs
            mountPath: "/kuiper/rtsp"
-           subPath: "latam-vcr"
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
@@ -45,7 +44,7 @@ spec:
           claimName: emqxbroker-pvc
       - name: ekuipervolvnfs
         persistentVolumeClaim:
-          claimName: nfs-claim-pvc-v12
+          claimName: pvc-blob-m
 ---
 apiVersion: v1
 kind: Service
