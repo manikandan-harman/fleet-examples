@@ -19,7 +19,7 @@ spec:
       containerName: images
       resourceGroup: pep-edap-eiotp-data-dev-eus-01-rg
       storageAccount: pepeiotpdveus1pubsa
-    volumeHandle: pepsicotest_images
+    volumeHandle: pepeiotpdveus1pubsa_images
   mountOptions:
   - -o allow_other
   - --file-cache-timeout-in-seconds=120
