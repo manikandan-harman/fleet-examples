@@ -1,41 +1,21 @@
-kind: Pod
-
 apiVersion: v1
-
+kind: Pod
 metadata:
-
-  name: nginx-blob
-
+  name: nginx-blob-p
 spec:
-
-  nodeSelector:
-
-    "kubernetes.io/os": linux
-
   containers:
-
-    - image: mcr.microsoft.com/oss/nginx/nginx:1.17.3-alpine
-
-      name: nginx-blob
-
-      command:
-
-        - "/bin/sh"
-
-        - "-c"
-
-        - while true; do echo $(date) >> /mnt/blob/outfile; sleep 1; done
-
-      volumeMounts:
-
-        - name: blob01
-
-          mountPath: "/mnt/blob"
-
+  - command:
+    - /bin/sh
+    - -c
+    - while true; do echo $(date) >> /mnt/blob/outfile; sleep 1; done
+    image: mcr.microsoft.com/oss/nginx/nginx:1.17.3-alpine
+    name: nginx-blob
+    volumeMounts:
+    - mountPath: /mnt/blob
+      name: blob01
+  nodeSelector:
+    kubernetes.io/os: linux
   volumes:
-
-    - name: blob01
-
-      persistentVolumeClaim:
-
-        claimName: pvc-blob
+  - name: blob01
+    persistentVolumeClaim:
+      claimName: pvc-blob-p
