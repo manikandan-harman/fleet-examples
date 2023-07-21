@@ -24,8 +24,6 @@ spec:
         volumeMounts:
          - name: ekuipervolv
            mountPath: "/kuiper/data"
-         - name: ekuipervolvnfs
-           mountPath: "/kuiper/rtsp"
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
@@ -42,9 +40,6 @@ spec:
       - name: ekuipervolv
         persistentVolumeClaim:
           claimName: emqxbroker-pvc
-      - name: ekuipervolvnfs
-        persistentVolumeClaim:
-          claimName: pvc-blob-p
 ---
 apiVersion: v1
 kind: Service
