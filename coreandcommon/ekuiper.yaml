@@ -24,6 +24,8 @@ spec:
         volumeMounts:
          - name: ekuiper-volv
            mountPath: "/kuiper/data"
+         - name:  pvc-json
+           mountPath: "Kuiper/farquet"
          - name: shared-volume
            mountPath: "/shared_path"
         securityContext:
@@ -62,6 +64,10 @@ spec:
       - name: blobfuse-destination
         persistentVolumeClaim:
           claimName: pvc-blob-v2
+      - name: pvc-json
+        persistentVolumeClaim:
+          claimName: data-pvc
+      
 ---
 apiVersion: v1
 kind: Service
