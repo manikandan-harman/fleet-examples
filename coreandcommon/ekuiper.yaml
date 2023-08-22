@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ekuiper-v2
+  name: ekuiper
   namespace: coreandcommon
 spec:
   selector:
@@ -19,13 +19,11 @@ spec:
           runAsGroup: 1001
      containers:
       - name: ekuiper
-        image: lfedge/ekuiper:1.9
+        image: lfedge/ekuiper:1.9.0-slim-python
         imagePullPolicy: IfNotPresent
         volumeMounts:
-         - name: ekuiper-volv
+         - name: ekuipervolv
            mountPath: "/kuiper/data"
-         - name: shared-volume
-           mountPath: "/shared_path"
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
@@ -38,30 +36,10 @@ spec:
          - containerPort: 9081
            name: management
            protocol: TCP
-       
-      - name: watcher-container
-        image: priyankajagtap007/blobfuse:8.3
-        volumeMounts:
-        - name: shared-volume
-          mountPath: "/shared_path"
-        - name: blobfuse-destination
-          mountPath: "/kuiper/rtsp"
-        env:
-        - name: SOURCE_PATH
-          value: "/shared_path"
-        - name: DESTINATION_PATH
-          value: "/kuiper/rtsp"
-          
      volumes:
-      - name: ekuiper-volv
+      - name: ekuipervolv
         persistentVolumeClaim:
           claimName: emqxbroker-pvc
-      - name: shared-volume
-        persistentVolumeClaim:
-          claimName: ekuiper-pvc
-      - name: blobfuse-destination
-        persistentVolumeClaim:
-          claimName: pvc-blob-v2
 ---
 apiVersion: v1
 kind: Service
