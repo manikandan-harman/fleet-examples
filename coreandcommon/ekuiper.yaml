@@ -22,7 +22,7 @@ spec:
         image: lfedge/ekuiper:1.9.0
         imagePullPolicy: IfNotPresent
         volumeMounts:
-         - name: ekuipervolv
+         - name: ekuipervol
            mountPath: "/kuiper/data"
         securityContext:
           runAsUser: 0
@@ -37,7 +37,7 @@ spec:
            name: management
            protocol: TCP
      volumes:
-      - name: ekuipervolv
+      - name: ekuipervol
         persistentVolumeClaim:
           claimName: emqxbroker-pvc
 ---
