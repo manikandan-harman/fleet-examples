@@ -1,1 +1,87 @@
-
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: neuronex-pvc
+  namespace: industrialqa-ns
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neuronex
+  namespace: industrialqa-ns
+spec:
+  selector:
+    matchLabels:
+      app: neuronex
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: neuronex
+    spec:
+     containers:
+      - name: neuronex
+        image: emqx/neuron:2.5.1
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+         - name: neuronexvolv
+           mountPath: /opt/neuron/persistence
+        ports:
+            - containerPort: 7000
+              name: management
+              protocol: TCP
+            - containerPort: 7081
+              name: nng
+              protocol: TCP
+     volumes:
+      - name: neuronexvolv
+        persistentVolumeClaim:
+          claimName: neuronex-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: neuroneclb
+  namespace: industrialqa-ns
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  externalIPs:
+    - 20.235.16.30
+  selector:
+    app: neuronex
+  ports:
+    - name: management
+      port: 7000
+      targetPort: 7000
+      protocol: TCP
+    - name: nng
+      port: 7081
+      targetPort: 7081
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: neuronekuipersvc
+  namespace: industrialqa-ns
+spec:
+  type: ClusterIP
+  selector:
+    app: neuronex
+  ports:
+    - name: neuronapi
+      port: 7000
+      targetPort: 7000
+      protocol: TCP
+    - name: nng
+      port: 7081
+      targetPort: 7081
+      protocol: TCP
