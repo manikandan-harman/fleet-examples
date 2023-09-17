@@ -11,6 +11,19 @@ spec:
     requests:
       storage: 1Gi
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ekuiper-plugin-pvc
+  namespace: coreandcommon
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 200Mi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,7 +50,7 @@ spec:
         volumeMounts:
          - name: ekuipervol
            mountPath: "/kuiper/data"
-         - name: ekuipervol
+         - name: ekuiper-plugin-v
            mountPath: "/kuiper/plugin"
            subPath: "plugin"
         securityContext:
@@ -56,6 +69,9 @@ spec:
       - name: ekuipervol
         persistentVolumeClaim:
           claimName: ekuiper-pvc
+      - name: ekuiper-plugin-v
+        persistentVolumeClaim:
+          claimName: ekuiper-plugin-pvc
 ---
 apiVersion: v1
 kind: Service
