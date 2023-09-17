@@ -37,6 +37,9 @@ spec:
         volumeMounts:
          - name: ekuipervol
            mountPath: "/kuiper/data"
+         - name: ekuipervol
+           mountPath: "/kuiper/plugin"
+           subPath: "plugin"
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
