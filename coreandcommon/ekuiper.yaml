@@ -49,9 +49,7 @@ spec:
         imagePullPolicy: IfNotPresent
         volumeMounts:
          - name: ekuipervol
-           mountPath: "/kuiper/data"
-         - name: ekuiper-plugin-v
-           mountPath: "/kuiper/plugin"
+           mountPath: "/kuiper"
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
