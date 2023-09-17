@@ -52,6 +52,7 @@ spec:
            mountPath: "/kuiper/data"
          - name: ekuiper-plugin-v
            mountPath: "/kuiper/plugins"
+           subPath: "plugins"
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
