@@ -50,9 +50,6 @@ spec:
         volumeMounts:
          - name: ekuipervol
            mountPath: /kuiper/data
-         - name: ekuiper-plugins-vol
-           mountPath: /kuiper/plugins
-           subPath: plugins
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
@@ -69,10 +66,6 @@ spec:
       - name: ekuipervol
         persistentVolumeClaim:
           claimName: ekuiper-pvc
-      - hostPath:
-        path: /mnt/plugins
-        type: DirectoryOrCreate
-        name: ekuiper-plugins-vol
 ---
 apiVersion: v1
 kind: Service
