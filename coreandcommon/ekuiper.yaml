@@ -50,7 +50,8 @@ spec:
         volumeMounts:
          - name: ekuipervol
            mountPath: "/kuiper/data"
-         - name: ekuiper-plugin-v
+           subPath: "data"
+         - name: ekuipervol
            mountPath: "/kuiper/plugins"
            subPath: "plugins"
         securityContext:
