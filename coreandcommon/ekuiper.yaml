@@ -43,14 +43,6 @@ spec:
           fsGroup: 1001
           runAsUser: 1001
           runAsGroup: 1001
-     initContainers:
-      - name: logshipper
-        image: alpine:latest
-        restartPolicy: Always
-        command: ['sh', '-c', 'touch /kuiper/plugins/logs.txt']
-        volumeMounts:
-         - name: ekuiper-plugin-v
-           mountPath: /kuiper/plugins
      containers:
       - name: ekuiper
         image: lfedge/ekuiper:1.11.2
@@ -59,7 +51,7 @@ spec:
          - name: ekuipervol
            mountPath: /kuiper/data
          - name: ekuiper-plugin-v
-           mountPath: /kuiper/plugins
+           mountPath: /kuiper/rtsp
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
