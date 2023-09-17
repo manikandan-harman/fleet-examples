@@ -50,7 +50,6 @@ spec:
         volumeMounts:
          - name: ekuipervol
            mountPath: /kuiper/data
-           subPath: data
         securityContext:
           runAsUser: 0
           allowPrivilegeEscalation: false
