@@ -1,3 +1,25 @@
+
+kubectl create secret generic azure-secret --from-literal azurestorageaccountname=industqa2308231027262sa --from-literal azurestorageaccountkey="mopnVWSD1tCVDelGQQNel7R1Ujs/fcwj7xWYSjxXhu28kWOvlxrPco5cQR+QpX8wgEwX6M3nDS2B+ASt9i1ehA==" --type=Opaque -n 
+
+# rpm -Uvh https://packages.microsoft.com/config/rhel/8/packages-microsoft-prod.rpm
+#yum install blobfuse2
+
+
+wget https://github.com/Azure/azure-storage-fuse/releases/download/blobfuse2-2.0.0-preview.3/blobfuse2-2.0.0-preview.3-Ubuntu-22.04-x86-64.deb
+sudo apt-get install libfuse3-dev fuse3 -y
+sudo dpkg -i blobfuse2-2.0.0-preview.3-Ubuntu-22.04-x86-64.deb
+
+
+
+helm repo add blob-csi-driver https://raw.githubusercontent.com/kubernetes-sigs/blob-csi-driver/master/charts
+
+helm install blob-csi-driver blob-csi-driver/blob-csi-driver --set node.enableBlobfuseProxy=true --namespace kube-system --set controller.replicas=1
+
+
+ kubectl exec -it  ekuiper-v2-57fc9c69dd-bs2nz    -c ekuiper -n coreandcommon -- touch /shared_path/123.txt
+
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+
 --------------storageClass---------------------
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
