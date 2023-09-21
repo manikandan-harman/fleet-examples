@@ -1,25 +1,79 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: ekuiper-pvc
+  name: ekuiper-v3
   namespace: industrialqa-ns
 spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: local-path
+  selector:
+    matchLabels:
+      app: ekuiper-v3
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ekuiper-v3
+    spec:
+     securityContext:
+          fsGroup: 1001
+          runAsUser: 1001
+          runAsGroup: 1001
+     containers:
+      - name: ekuiper-v3
+        image: lfedge/ekuiper:1.9
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+         - name: ekuiper-volv
+           mountPath: "/kuiper/data"
+         - name: shared-volume
+           mountPath: "/shared_path"
+        securityContext:
+          runAsUser: 0
+          allowPrivilegeEscalation: false
+        env:
+        - name: MQTT_SOURCE__DEFAULT__SERVER
+          value: 'tcp://emqxbrokersvc.coreandcommon.svc.cluster.local:1883'
+        - name: KUIPER__BASIC__IGNORECASE
+          value: 'false'
+        ports:
+         - containerPort: 9081
+           name: management
+           protocol: TCP
+       
+      - name: watcher-container
+        image: priyankajagtap007/blobfuse:8.3
+        volumeMounts:
+        - name: shared-volume
+          mountPath: "/shared_path"
+        - name: blobfuse-destination
+          mountPath: "/kuiper/rtsp"
+        env:
+        - name: SOURCE_PATH
+          value: "/shared_path"
+        - name: DESTINATION_PATH
+          value: "/kuiper/rtsp"
+          
+     volumes:
+      - name: ekuiper-volv
+        persistentVolumeClaim:
+          claimName: data-pvc
+      - name: shared-volume
+        persistentVolumeClaim:
+          claimName: ekuiper-pvc
+      - name: blobfuse-destination
+        persistentVolumeClaim:
+          claimName: pvc-blob-v2
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: Service
 metadata:
-  name: data-pvc
+  name: ekuipersvc-v3
   namespace: industrialqa-ns
 spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: local-path
+  type: ClusterIP
+  selector:
+    app: ekuiper
+  ports:
+    - name: management
+      port: 9081
+      targetPort: 9081
+      protocol: TCP
