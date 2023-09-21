@@ -1,33 +1,15 @@
-
+kind: PersistentVolumeClaim
 apiVersion: v1
-kind: PersistentVolume
 metadata:
-  annotations:
-    pv.kubernetes.io/provisioned-by: blob.csi.azure.com
-  name: pv-blob-v2
+  name: pvc-blob-v2
 spec:
-  capacity:
-    storage: 1Gi
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-blob-v2
   storageClassName: blob-fuse-v2
-  mountOptions:
-    - -o allow_other
-    - --file-cache-timeout-in-seconds=120
-  csi:
-    driver: blob.csi.azure.com
-    readOnly: false
-    # make sure volumeid is unique for every storage blob container in the cluster
-    # the # character is reserved for internal use
-    volumeHandle: industdv2308160642424sa_images
-    volumeAttributes:
-      resourceGroup: pep-edap-eiotp-data-qa-eus-01-rg
-      storageAccount: industqa2308231027262sa
-      containerName: industrialqa
-      protocol: fuse2
-  # secrete for storage account 
-    nodeStageSecretRef:
-      name: azure-secret
-      namespace: industrialqa-ns
+
+
      
