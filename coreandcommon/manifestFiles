@@ -1,79 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ekuiper-v3
+  name: ekuiper-manager
   namespace: industrialqa-ns
 spec:
   selector:
     matchLabels:
-      app: ekuiper-v3
+      app: ekuiper-manager
   replicas: 1
   template:
     metadata:
       labels:
-        app: ekuiper-v3
+        app: ekuiper-manager
     spec:
-     securityContext:
-          fsGroup: 1001
-          runAsUser: 1001
-          runAsGroup: 1001
      containers:
-      - name: ekuiper-v3
-        image: lfedge/ekuiper:1.9
+      - name: ekuiper-manager
+        image: emqx/ekuiper-manager:1.9
         imagePullPolicy: IfNotPresent
-        volumeMounts:
-         - name: ekuiper-volv
-           mountPath: "/kuiper/data"
-         - name: shared-volume
-           mountPath: "/shared_path"
-        securityContext:
-          runAsUser: 0
-          allowPrivilegeEscalation: false
         env:
-        - name: MQTT_SOURCE__DEFAULT__SERVER
-          value: 'tcp://emqxbrokersvc.coreandcommon.svc.cluster.local:1883'
-        - name: KUIPER__BASIC__IGNORECASE
-          value: 'false'
+        - name: DEFAULT_EKUIPER_ENDPOINT
+          value: 'http://ekuipersvc.latam-vcr-ns.svc.cluster.local:9081'
         ports:
-         - containerPort: 9081
-           name: management
-           protocol: TCP
-       
-      - name: watcher-container
-        image: priyankajagtap007/blobfuse:8.3
-        volumeMounts:
-        - name: shared-volume
-          mountPath: "/shared_path"
-        - name: blobfuse-destination
-          mountPath: "/kuiper/rtsp"
-        env:
-        - name: SOURCE_PATH
-          value: "/shared_path"
-        - name: DESTINATION_PATH
-          value: "/kuiper/rtsp"
-          
-     volumes:
-      - name: ekuiper-volv
-        persistentVolumeClaim:
-          claimName: data-pvc
-      - name: shared-volume
-        persistentVolumeClaim:
-          claimName: ekuiper-pvc
-      - name: blobfuse-destination
-        persistentVolumeClaim:
-          claimName: pvc-blob-v2
+            - containerPort: 9082
+              name: management
+              protocol: TCP
+    				  
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ekuipersvc-v3
-  namespace: industrialqa-ns
+  name: ekuipermgrsvc
+  namespace: indistrialqa-ns
 spec:
   type: ClusterIP
   selector:
-    app: ekuiper
+    app: ekuiper-manager
   ports:
     - name: management
-      port: 9081
-      targetPort: 9081
+      port: 9082
+      targetPort: 9082
       protocol: TCP
