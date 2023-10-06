@@ -40,7 +40,7 @@ spec:
            protocol: TCP
        
       - name: watcher-container
-        image: priyankajagtap007/blobfuse:9.0
+        image: priyankajagtap007/blobfuse:9.1
         volumeMounts:
         - name: shared-volume
           mountPath: "/shared_path"
