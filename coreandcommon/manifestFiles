@@ -1,5 +1,3 @@
-kubectl create secret generic azure-secret --from-literal azurestorageaccountname=industqa2308231027262sa --from-literal azurestorageaccountkey="mopnVWSD1tCVDelGQQNel7R1Ujs/fcwj7xWYSjxXhu28kWOvlxrPco5cQR+QpX8wgEwX6M3nDS2B+ASt9i1ehA==" --type=Opaque -n 
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,7 +40,7 @@ spec:
            protocol: TCP
        
       - name: watcher-container
-        image: priyankajagtap007/blobfuse:9.0
+        image: priyankajagtap007/blobfuse:8.3
         volumeMounts:
         - name: shared-volume
           mountPath: "/shared_path"
